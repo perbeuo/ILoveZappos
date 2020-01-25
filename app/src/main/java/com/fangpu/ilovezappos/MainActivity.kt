@@ -2,18 +2,18 @@ package com.fangpu.ilovezappos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.fangpu.ilovezappos.ui.main.MainFragment
+import com.fangpu.ilovezappos.ui.main.PriceHistoryFragment
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
-        }
+//        if (savedInstanceState == null) {
+//            supportFragmentManager.beginTransaction()
+//                    .replace(R.id.container, PriceHistoryFragment.newInstance())
+//                    .commitNow()
+//        }
     }
 
 }

@@ -6,30 +6,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import com.fangpu.ilovezappos.R
-import com.fangpu.ilovezappos.databinding.MainFragmentBinding
+import com.fangpu.ilovezappos.databinding.PriceHistoryFragmentBinding
 import com.github.mikephil.charting.charts.LineChart
 
-class MainFragment : Fragment() {
+class PriceHistoryFragment : Fragment() {
     private lateinit var chart: LineChart
 
     companion object {
         fun newInstance() = PriceHistoryFragment()
     }
 
+    private val viewModel: PriceHistoryViewModel by lazy {
+        ViewModelProviders.of(this).get(PriceHistoryViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<MainFragmentBinding>(
-            inflater, R.layout.main_fragment, container, false)
+        val binding = PriceHistoryFragmentBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
-        binding.toPriceButton.setOnClickListener (
-            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_priceHistoryFragment)
-        )
+        binding.viewModel = viewModel
         return binding.root
     }
 

@@ -14,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 
-class MainViewModel : ViewModel() {
+class PriceHistoryViewModel : ViewModel() {
 
     private val _info = MutableLiveData<List<BitstampPrice>>()
 

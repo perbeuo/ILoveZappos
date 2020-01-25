@@ -7,37 +7,27 @@
     <data>
         <variable
             name="viewModel"
-            type="com.fangpu.ilovezappos.ui.main.MainViewModel" />
+            type="com.fangpu.ilovezappos.ui.main.PriceHistoryViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainFragment"
+    tools:context=".ui.main.PriceHistoryFragment"
     >
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/message"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:priceChartData="@{viewModel.info}"/>
-
-    <TextView
-        android:id="@+id/message"
+    <Button
+        android:id="@+id/to_price_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="12dp"
+        android:text="To Price"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chart1"
-        app:welcomeInfo="@{viewModel.info}"
-        tools:text="MainFragment" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
