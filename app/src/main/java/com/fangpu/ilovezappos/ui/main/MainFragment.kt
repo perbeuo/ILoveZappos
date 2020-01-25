@@ -29,6 +29,5 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
         return binding.root
     }
-    
 
 }

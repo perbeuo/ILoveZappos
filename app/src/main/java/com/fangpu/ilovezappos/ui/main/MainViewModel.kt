@@ -4,15 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fangpu.ilovezappos.network.BitstampApi
+import com.fangpu.ilovezappos.network.BitstampPrice
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 class MainViewModel : ViewModel() {
 
-    private val _info = MutableLiveData<String>()
+    private val _info = MutableLiveData<List<BitstampPrice>>()
 
-    val info: LiveData<String>
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main )
+
+    val info: LiveData<List<BitstampPrice>>
         get() = _info
 
     init {
@@ -20,15 +29,19 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getInternetData() {
-        BitstampApi.retrofitService.getPriceHistory().enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _info.value = t.message
+        coroutineScope.launch{
+            var getPriceHistoryDeferred = BitstampApi.retrofitService.getPriceHistory()
+            try{
+                val listResult = getPriceHistoryDeferred.await()
+                _info.value = listResult
+            } catch (e: Exception){
+                _info.value = ArrayList()
             }
+        }
+    }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _info.value = response.body()
-            }
-        })
-        _info.value = "Hello Fragment"
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
