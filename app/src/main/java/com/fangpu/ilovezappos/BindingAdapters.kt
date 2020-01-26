@@ -16,6 +16,8 @@ import com.github.mikephil.charting.components.LegendEntry
 import androidx.recyclerview.widget.RecyclerView
 import com.fangpu.ilovezappos.data.Order
 import com.fangpu.ilovezappos.network.OrdersBook
+import kotlin.math.max
+import kotlin.math.min
 
 
 @BindingAdapter("welcomeInfo")
@@ -28,16 +30,32 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: OrdersBook?) {
     val adapter = recyclerView.adapter as OrderBookAdapter
     if (data != null) {
         var orderList = ArrayList<Order>()
-        for (order in data.bids){
-            orderList.add(Order(order[0], order[1]))
+        orderList.add(Order("Bid", "Amount", "Ask", "Amount"))
+        val maxRow = max(data.bids.size, data.asks.size)
+        val minRow = min(data.bids.size, data.asks.size)
+        val isBidLess = data.bids.size < data.asks.size
+        val isAskLess = data.bids.size > data.asks.size
+
+        for (i in 0 until maxRow){
+            if (isBidLess && i >= minRow){
+                orderList.add(Order("", "",
+                    data.asks[i][0], data.asks[i][1]))
+            } else if (isAskLess && i >= minRow){
+                orderList.add(Order(data.bids[i][0], data.bids[i][1],
+                    "", ""))
+            } else{
+                orderList.add(Order(data.bids[i][0], data.bids[i][1],
+                    data.asks[i][0], data.asks[i][1]))
+            }
         }
+
         adapter.submitList(orderList)
     }
 }
 
 @BindingAdapter("orderBid")
 fun showOrderBid(bidTextView: TextView, order: Order?) {
-    bidTextView.text = order?.price.toString()
+    bidTextView.text = order?.bid.toString()
 }
 
 @BindingAdapter("priceChartData")
@@ -128,7 +146,7 @@ private fun setData(
 //            val cal = Calendar.getInstance(Locale.ENGLISH)
 //            cal.setTimeInMillis(priceData.date.toLong() * 1000L)
 //            val date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString()
-//            Log.i("PriceData", priceData.date + ": " + timeDiff.toString() + ": " + priceData.price)
+//            Log.i("PriceData", priceData.date + ": " + timeDiff.toString() + ": " + priceData.bid)
             time++
         }
     }

@@ -27,7 +27,7 @@ class OrderBookViewModel : ViewModel() {
         getInternetData()
     }
 
-    private fun getInternetData() {
+    fun getInternetData() {
         coroutineScope.launch{
             val getOrderBookDeferred = BitstampApi.retrofitService.getOrderBook()
             try{

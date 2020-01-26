@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fangpu.ilovezappos.data.Order
 import com.fangpu.ilovezappos.databinding.OrderBookListItemBinding
-import kotlinx.android.synthetic.main.order_book_list_item.view.*
 
 class OrderBookAdapter: ListAdapter<Order, OrderBookAdapter.RowViewHolder>(OrderBookDiffCallback) {
 //    var data = listOf<Order>()
@@ -31,15 +31,17 @@ class OrderBookAdapter: ListAdapter<Order, OrderBookAdapter.RowViewHolder>(Order
         val item = getItem(position)
         holder.bind(item)
 //        holder.itemView.apply {
-//            bid_text.text = getItem(position).price.toString()
-//            amount_text.text = getItem(position).amount.toString()
+//            bid_text.text = getItem(position).bid.toString()
+//            amount_text.text = getItem(position).bid_amount.toString()
 //        }
     }
 
     inner class RowViewHolder(val binding: OrderBookListItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: Order){
-            binding.bidText.text = item.price.toString()
-            binding.amountText.text = item.amount.toString()
+            binding.bidText.text = item.bid
+            binding.bidAmountText.text = item.bid_amount
+            binding.askText.text = item.ask
+            binding.askAmountText.text = item.ask_amount
         }
     }
 

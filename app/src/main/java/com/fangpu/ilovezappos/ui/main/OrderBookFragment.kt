@@ -32,7 +32,13 @@ class OrderBookFragment : Fragment() {
         binding.bidDataRecycler.adapter = adapter
         binding.setLifecycleOwner(this)
         binding.orderData = viewModel
+
+        binding.swipeContainer.setOnRefreshListener {
+            viewModel.getInternetData()
+            binding.swipeContainer.isRefreshing = false
+        }
         return binding.root
     }
+
 
 }

@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Order(
-    var price: String,
-    var amount: String
+    var bid: String,
+    var bid_amount: String,
+    var ask: String,
+    var ask_amount: String
 ) : Parcelable
