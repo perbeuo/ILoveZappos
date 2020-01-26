@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_mainFragment_to_priceHistoryFragment"
             app:destination="@id/priceHistoryFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_orderBookFragment"
+            app:destination="@id/orderBookFragment" />
     </fragment>
     <fragment
         android:id="@+id/priceHistoryFragment"
         android:name="com.fangpu.ilovezappos.ui.main.PriceHistoryFragment"
         android:label="PriceHistoryFragment"
         tools:layout="@layout/price_history_fragment"/>
+    <fragment
+        android:id="@+id/orderBookFragment"
+        android:name="com.fangpu.ilovezappos.ui.main.OrderBookFragment"
+        android:label="OrderBookFragment"
+        tools:layout="@layout/order_book_list_item"/>
 </navigation>

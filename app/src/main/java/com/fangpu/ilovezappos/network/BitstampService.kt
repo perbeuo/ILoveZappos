@@ -1,10 +1,10 @@
 package com.fangpu.ilovezappos.network
 
+import com.fangpu.ilovezappos.data.Order
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -24,7 +24,11 @@ private val retrofit = Retrofit.Builder()
 interface BitstampService{
     @GET("transactions/btcusd/")
     fun getPriceHistory():
-        Deferred<List<BitstampPrice>>
+            Deferred<List<BitstampPrice>>
+
+    @GET("order_book/btcusd/")
+    fun getOrderBook():
+            Deferred<OrdersBook>
 }
 
 object BitstampApi {

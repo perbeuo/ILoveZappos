@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/txtRank"
-        android:layout_width="56dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"
-        android:background="@color/cardview_dark_background"
-        tools:text="Bid"
-        android:textSize="18sp"
-        android:textColor="@color/colorLight"/>
+    <data>
+        <variable
+            name="order"
+            type="com.fangpu.ilovezappos.data.Order" />
+    </data>
 
-    <TextView
-        android:id="@+id/txtMovieName"
-        android:layout_width="110dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="@color/cardview_dark_background"
-        tools:text="Amount"
-        android:textSize="18sp"
-        android:textColor="@color/colorLight"/>
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/bid_text"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:background="@color/cardview_dark_background"
+            tools:text="Bid"
+            android:textSize="18sp"
+            android:textColor="@color/colorGreen"/>
+
+        <TextView
+            android:id="@+id/amount_text"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/cardview_dark_background"
+            tools:text="Amount"
+            android:textSize="18sp"
+            android:textColor="@color/colorLight" />
+
+    </LinearLayout>
+</layout>

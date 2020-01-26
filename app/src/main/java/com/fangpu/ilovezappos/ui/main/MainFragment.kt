@@ -30,6 +30,9 @@ class MainFragment : Fragment() {
         binding.toPriceButton.setOnClickListener (
             Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_priceHistoryFragment)
         )
+        binding.toOrderButton.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_orderBookFragment)
+        )
         return binding.root
     }
 

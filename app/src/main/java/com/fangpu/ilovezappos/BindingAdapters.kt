@@ -1,7 +1,6 @@
 package com.fangpu.ilovezappos
 
 import android.graphics.Color
-import android.text.format.DateFormat
 import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -11,24 +10,34 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
-import java.util.*
 import kotlin.collections.ArrayList
-import android.R.color
-import android.R.attr.label
-import android.R.attr.entries
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
-import java.text.SimpleDateFormat
+import androidx.recyclerview.widget.RecyclerView
+import com.fangpu.ilovezappos.data.Order
+import com.fangpu.ilovezappos.network.OrdersBook
 
 
 @BindingAdapter("welcomeInfo")
 fun bindInfo(infoText: TextView, info: List<BitstampPrice>?) {
     infoText.text = info?.get(0)?.price
+}
+
+@BindingAdapter("listData")
+fun bindRecyclerView(recyclerView: RecyclerView, data: OrdersBook?) {
+    val adapter = recyclerView.adapter as OrderBookAdapter
+    if (data != null) {
+        var orderList = ArrayList<Order>()
+        for (order in data.bids){
+            orderList.add(Order(order[0], order[1]))
+        }
+        adapter.submitList(orderList)
+    }
+}
+
+@BindingAdapter("orderBid")
+fun showOrderBid(bidTextView: TextView, order: Order?) {
+    bidTextView.text = order?.price.toString()
 }
 
 @BindingAdapter("priceChartData")
