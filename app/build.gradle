@@ -12,6 +12,13 @@ android {
     dataBinding {
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
     defaultConfig {
         applicationId "com.fangpu.ilovezappos"
         minSdkVersion 19
@@ -63,4 +70,9 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    //noinspection GradleCompatible
+    implementation "com.android.support:support-compat:28.0.0"
+
+    implementation "androidx.work:work-runtime-ktx:2.3.0"
 }
