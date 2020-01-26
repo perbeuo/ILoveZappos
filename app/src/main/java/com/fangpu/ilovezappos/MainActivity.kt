@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 //        }
         createWorkManager()
     }
+
+    // Create the work of checking real-time price and compare with user set price
     private fun createWorkManager() {
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         if (sharedPref != null) {
@@ -33,11 +35,19 @@ class MainActivity : AppCompatActivity() {
 
             // Create period job, repeat every 1 hour
             val priceAlertRequest =
-                PeriodicWorkRequestBuilder<PriceAlertWorker>(1, TimeUnit.MINUTES)
+                PeriodicWorkRequestBuilder<PriceAlertWorker>(15, TimeUnit.MINUTES)
                     .setInputData(priceData)
+                    .addTag(getString(R.string.price_alert_tag))
                     .build()
 
+            WorkManager.getInstance(this).cancelAllWorkByTag(getString(R.string.price_alert_tag))
             WorkManager.getInstance(this).enqueue(priceAlertRequest)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("PriceAlert", "Kill all work")
+        WorkManager.getInstance(this).cancelAllWork()
     }
 }

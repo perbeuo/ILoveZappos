@@ -54,26 +54,8 @@ class MainFragment : Fragment() {
         )
 
         createNotificationChannel()
-//        createWorkManager()
 
         binding.testNotificationButton.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
-            var builder = this.context?.let { it1 -> NotificationCompat.Builder(it1, CHANNEL_ID)
-                .setContentTitle("Price Alert")
-                .setContentText("Your price is dropped below current market price!")
-                .setSmallIcon(R.drawable.notification_icon)
-                .setOnlyAlertOnce(true)
-                .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-            }
-
-            with(NotificationManagerCompat.from(this.context!!)){
-                notify(102, builder!!.build())
-            }
 
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             if (sharedPref != null) {
@@ -107,42 +89,6 @@ class MainFragment : Fragment() {
             val notificationManager: NotificationManager =
                 context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    // Create the work of checking real-time price and compare with user set price
-    private fun createWorkManager() {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        if (sharedPref != null) {
-            // Get user set price
-            val alertPrice = sharedPref.getInt(getString(R.string.saved_alert_price_key), -1)
-            Log.i("Notification", alertPrice.toString())
-
-            // Create work data using user set price
-            val priceData = workDataOf(getString(R.string.saved_alert_price_key) to alertPrice.toString())
-
-            // Create period job, repeat every 1 hour
-            val priceAlertRequest =
-                PeriodicWorkRequestBuilder<PriceAlertWorker>(1, TimeUnit.MINUTES)
-                    .setInputData(priceData)
-                    .build()
-            WorkManager.getInstance(context!!).enqueue(priceAlertRequest)
-        }
-    }
-
-    // Price alert worker class
-    inner class PriceAlertWorker(appContext: Context, workerParams: WorkerParameters)
-        : Worker(appContext, workerParams) {
-
-        override fun doWork(): Result {
-
-            // Get the input
-            val price = getInputData().getString(getString(R.string.saved_alert_price_key))
-
-            Log.i("WorkManager", price)
-
-            return Result.success()
-
         }
     }
 

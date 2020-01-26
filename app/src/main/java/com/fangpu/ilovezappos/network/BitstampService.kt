@@ -29,6 +29,10 @@ interface BitstampService{
     @GET("order_book/btcusd/")
     fun getOrderBook():
             Deferred<OrdersBook>
+
+    @GET("ticker_hour/btcusd/")
+    fun getTicketHour():
+            Deferred<TicketHour>
 }
 
 object BitstampApi {
