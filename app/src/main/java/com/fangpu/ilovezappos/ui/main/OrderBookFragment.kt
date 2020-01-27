@@ -23,11 +23,6 @@ import java.lang.Double.parseDouble
 import java.util.concurrent.TimeUnit
 
 class OrderBookFragment : Fragment() {
-    private lateinit var chart: LineChart
-
-    companion object {
-        fun newInstance() = OrderBookFragment()
-    }
 
     private val viewModel: OrderBookViewModel by lazy {
         ViewModelProviders.of(this).get(OrderBookViewModel::class.java)
@@ -41,7 +36,7 @@ class OrderBookFragment : Fragment() {
         val adapter = OrderBookAdapter()
 
         binding.bidDataRecycler.adapter = adapter
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.orderData = viewModel
 
         binding.swipeContainer.setOnRefreshListener {
@@ -50,35 +45,34 @@ class OrderBookFragment : Fragment() {
         }
 
         binding.setAlertPriceButton.setOnClickListener {
-            Log.i("PriceAlert", "Button pressed")
 
-            val input: EditText = EditText(context)
+            val input = EditText(context)
             input.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_CLASS_NUMBER
 
-            val alertDialog: AlertDialog? = activity?.let {
+            activity?.let {
                 val builder = AlertDialog.Builder(it, R.style.Theme_MaterialComponents_Light_Dialog)
                 builder.apply {
-                    setPositiveButton(R.string.set,
-                        DialogInterface.OnClickListener { dialog, id ->
-                            val userPrice = input.text.toString()
-                            var isValidInput = true
-                            Log.i("PriceAlert", "Get user input of $userPrice")
+                    setPositiveButton(R.string.set
+                    ) { _, _ ->
+                        val userPrice = input.text.toString()
+                        var isValidInput = true
+                        Log.i("PriceAlert", "Get user input of $userPrice")
 
-                            // Check if the input is a valid number
-                            try {
-                                val userPriceDouble = parseDouble(userPrice)
-                            } catch (e: NumberFormatException) {
-                                isValidInput = false
-                            }
-                            if (isValidInput){
-                                saveUserPriceData(userPrice)
-                                createWorkManager(userPrice)
-                            }
-                        })
-                    setNegativeButton(R.string.cancel,
-                        DialogInterface.OnClickListener { dialog, id ->
-                            dialog.cancel()
-                        })
+                        // Check if the input is a valid number
+                        try {
+                            parseDouble(userPrice)
+                        } catch (e: NumberFormatException) {
+                            isValidInput = false
+                        }
+                        if (isValidInput){
+                            saveUserPriceData(userPrice)
+                            createWorkManager(userPrice)
+                        }
+                    }
+                    setNegativeButton(R.string.cancel
+                    ) { dialog, _ ->
+                        dialog.cancel()
+                    }
                     setMessage(R.string.price_alert_dialog_message)
                     setTitle(R.string.price_alert_dialog_title)
                     setView(input)
@@ -94,10 +88,6 @@ class OrderBookFragment : Fragment() {
     }
 
     private fun createWorkManager(price: String) {
-        // Clear previous job
-//        WorkManager.getInstance(activity!!).cancelAllWorkByTag(getString(R.string.price_alert_tag))
-//        WorkManager.getInstance(activity!!).pruneWork()
-
         // Create work data using user set price
         val priceData = workDataOf(getString(R.string.saved_alert_price_key) to price)
 

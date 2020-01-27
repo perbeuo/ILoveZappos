@@ -3,19 +3,17 @@ package com.fangpu.ilovezappos
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.res.Resources
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
-import androidx.fragment.app.FragmentManager
 import androidx.work.*
-import com.fangpu.ilovezappos.ui.main.CHANNEL_ID
 import com.fangpu.ilovezappos.ui.main.OrderBookFragment
 import com.fangpu.ilovezappos.ui.main.PriceHistoryFragment
 import java.util.concurrent.TimeUnit
+const val CHANNEL_ID = "com.fangpu.ilovezappos.notify"
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 //                    .replace(R.id.container, PriceHistoryFragment.newInstance())
 //                    .commitNow()
 //        }
-//        createWorkManager()
+        createWorkManager()
         createNotificationChannel()
 
         val priceHistoryFragment = PriceHistoryFragment()
@@ -48,8 +46,6 @@ class MainActivity : AppCompatActivity() {
 
     // Create the work of checking real-time price and compare with user set price
     private fun createWorkManager() {
-//        WorkManager.getInstance(this).cancelAllWorkByTag(getString(R.string.price_alert_tag))
-//        WorkManager.getInstance(this).pruneWork()
 
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         if (sharedPref != null) {
@@ -94,9 +90,5 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        WorkManager.getInstance(this).cancelAllWorkByTag(getString(R.string.price_alert_tag))
-//    }
+
 }

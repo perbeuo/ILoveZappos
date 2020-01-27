@@ -9,9 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.lang.Exception
 
 class PriceHistoryViewModel : ViewModel() {
@@ -30,7 +27,7 @@ class PriceHistoryViewModel : ViewModel() {
 
     private fun getInternetData() {
         coroutineScope.launch{
-            var getPriceHistoryDeferred = BitstampApi.retrofitService.getPriceHistory()
+            val getPriceHistoryDeferred = BitstampApi.retrofitService.getPriceHistory()
             try{
                 val listResult = getPriceHistoryDeferred.await()
                 _info.value = listResult

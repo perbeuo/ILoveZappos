@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fangpu.ilovezappos.data.Order
 import com.fangpu.ilovezappos.network.BitstampApi
 import com.fangpu.ilovezappos.network.OrdersBook
 import kotlinx.coroutines.CoroutineScope
@@ -31,9 +30,9 @@ class OrderBookViewModel : ViewModel() {
         coroutineScope.launch{
             val getOrderBookDeferred = BitstampApi.retrofitService.getOrderBook()
             try{
-                val listResult = getOrderBookDeferred.await()
-                _info.value = listResult
-                Log.i("OrderBook", listResult.toString())
+                val result = getOrderBookDeferred.await()
+                _info.value = result
+                Log.i("OrderBook", result.toString())
             } catch (e: Exception){
                 _info.value = null
                 Log.e("OrderBook", "No data retrieved")

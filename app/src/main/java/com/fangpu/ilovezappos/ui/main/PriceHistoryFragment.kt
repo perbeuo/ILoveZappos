@@ -10,11 +10,6 @@ import com.fangpu.ilovezappos.databinding.PriceHistoryFragmentBinding
 import com.github.mikephil.charting.charts.LineChart
 
 class PriceHistoryFragment : Fragment() {
-    private lateinit var chart: LineChart
-
-    companion object {
-        fun newInstance() = PriceHistoryFragment()
-    }
 
     private val viewModel: PriceHistoryViewModel by lazy {
         ViewModelProviders.of(this).get(PriceHistoryViewModel::class.java)
@@ -25,7 +20,7 @@ class PriceHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = PriceHistoryFragmentBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root
     }

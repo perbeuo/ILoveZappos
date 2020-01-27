@@ -7,10 +7,8 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.TaskStackBuilder
 import androidx.work.*
 import com.fangpu.ilovezappos.network.BitstampApi
-import com.fangpu.ilovezappos.ui.main.CHANNEL_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -56,24 +54,14 @@ class PriceAlertWorker(appContext: Context, workerParams: WorkerParameters)
     }
 
     private fun createNotification() {
-//        // Create intent
-//        val intent = Intent(applicationContext, MainActivity::class.java)
-////        val pendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
-//        val pendingIntent: PendingIntent? = TaskStackBuilder.create(applicationContext).run {
-//            // Add the intent, which inflates the back stack
-//            addNextIntentWithParentStack(intent)
-//            // Get the PendingIntent containing the entire back stack
-//            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-//        }
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         intent.component = ComponentName(applicationContext, MainActivity::class.java)
+        // Check if the activity exists
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
 
         val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
-
-
 
         val builder = applicationContext.let { it1 ->
             NotificationCompat.Builder(it1, CHANNEL_ID)
@@ -91,6 +79,5 @@ class PriceAlertWorker(appContext: Context, workerParams: WorkerParameters)
             notify(2398, builder!!.build())
         }
     }
-
 
 }

@@ -2,7 +2,6 @@ package com.fangpu.ilovezappos
 
 import android.graphics.Color
 import android.util.Log
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.fangpu.ilovezappos.network.BitstampPrice
 import com.github.mikephil.charting.charts.LineChart
@@ -19,17 +18,11 @@ import com.fangpu.ilovezappos.network.OrdersBook
 import kotlin.math.max
 import kotlin.math.min
 
-
-@BindingAdapter("welcomeInfo")
-fun bindInfo(infoText: TextView, info: List<BitstampPrice>?) {
-    infoText.text = info?.get(0)?.price
-}
-
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: OrdersBook?) {
     val adapter = recyclerView.adapter as OrderBookAdapter
     if (data != null) {
-        var orderList = ArrayList<Order>()
+        val orderList = ArrayList<Order>()
         orderList.add(Order("Bid", "Amount", "Ask", "Amount"))
         val maxRow = max(data.bids.size, data.asks.size)
         val minRow = min(data.bids.size, data.asks.size)
@@ -53,10 +46,6 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: OrdersBook?) {
     }
 }
 
-@BindingAdapter("orderBid")
-fun showOrderBid(bidTextView: TextView, order: Order?) {
-    bidTextView.text = order?.bid.toString()
-}
 
 @BindingAdapter("priceChartData")
 fun showPriceChart(priceChart: LineChart, info: List<BitstampPrice>?) {
@@ -65,34 +54,34 @@ fun showPriceChart(priceChart: LineChart, info: List<BitstampPrice>?) {
 
     setupChart(priceChart, 0xF7A35C, "Value")
     // no description text
-    priceChart.getDescription().setEnabled(false)
+    priceChart.description.isEnabled = false
 
     // enable touch gestures
     priceChart.setTouchEnabled(true)
 
     // enable scaling and dragging
-    priceChart.setDragEnabled(true)
+    priceChart.isDragEnabled = true
     priceChart.setScaleEnabled(true)
 
     // if disabled, scaling can be done on x- and y-axis separately
     priceChart.setPinchZoom(false)
 
     priceChart.setDrawGridBackground(false)
-    priceChart.setMaxHighlightDistance(300f)
+    priceChart.maxHighlightDistance = 300f
 
     val x = priceChart.getXAxis()
-//    x.setEnabled(false)
+    x.isEnabled = false
 
     val y = priceChart.getAxisLeft()
     y.setLabelCount(6, false)
-    y.setTextColor(Color.WHITE)
+    y.textColor = Color.WHITE
     y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
     y.setDrawGridLines(false)
-    y.setAxisLineColor(Color.WHITE)
+    y.axisLineColor = Color.WHITE
 
-    priceChart.getAxisRight().setEnabled(false)
+    priceChart.axisRight.isEnabled = false
 
-    priceChart.getLegend().setEnabled(false)
+    priceChart.legend.isEnabled = false
 
     priceChart.animateXY(2000, 2000)
 
@@ -161,7 +150,7 @@ private fun setData(
     } else {
         // create a dataset and give it a type
         val set = LineDataSet(values, "Time series")
-        set.setDrawFilled(true)// 填充
+        set.setDrawFilled(true)
         set.setDrawCircles(false)
         set.fillAlpha = 40
         set.lineWidth = 1f
