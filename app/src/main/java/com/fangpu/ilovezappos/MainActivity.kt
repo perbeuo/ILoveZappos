@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         if (sharedPref != null) {
             // Get user set price
-            val alertPrice = sharedPref.getFloat(getString(R.string.saved_alert_price_key), Float.MAX_VALUE)
+            val alertPrice = sharedPref.getFloat(getString(R.string.saved_alert_price_key), Float.MIN_VALUE)
             Log.i("Notification", alertPrice.toString())
 
             // Create work data using user set price
