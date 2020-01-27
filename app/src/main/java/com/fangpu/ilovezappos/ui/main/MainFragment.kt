@@ -53,60 +53,18 @@ class MainFragment : Fragment() {
             Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_orderBookFragment)
         )
 
-        createNotificationChannel()
-
         binding.testNotificationButton.setOnClickListener {
 
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             if (sharedPref != null) {
-//                with (sharedPref.edit()) {
-//                    putInt(getString(R.string.saved_alert_price_key), 23)
-//                    commit()
-//                }
                 val alertPrice = sharedPref.getInt(getString(R.string.saved_alert_price_key), 0)
                 Log.i("Notification", alertPrice.toString())
             }
 
-
-
         }
-
         return binding.root
     }
 
-    // Create a notification channel.(Can be called for multiple times)
-    private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.channel_name)
-            val descriptionText = getString(R.string.channel_description)
-            val importance = NotificationManager.IMPORTANCE_HIGH
-                val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager =
-                context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-//    override fun onPause() {
-//        super.onPause()
-//        Log.i("Notification", "Paused")
-//        val builder = this.context?.let { it1 -> NotificationCompat.Builder(it1, CHANNEL_ID)
-//            .setContentTitle("Price Drop")
-//            .setContentText("Your price set is dropped below current market price!")
-//            .setSmallIcon(R.drawable.notification_icon)
-//            .setChannelId(CHANNEL_ID)
-//            .setPriority(NotificationCompat.PRIORITY_HIGH)
-//        }
-//
-//        with(NotificationManagerCompat.from(this.context!!)){
-//            notify(102, builder!!.build())
-//        }
-//    }
 }
 
 

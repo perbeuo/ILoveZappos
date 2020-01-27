@@ -42,7 +42,7 @@ class PriceAlertWorker(appContext: Context, workerParams: WorkerParameters)
                 val lastPrice = result.last
 
                 // Current price is below user set price
-                if (lastPrice.toFloat() > userPrice.toFloat()){
+                if (lastPrice.toFloat() < userPrice.toFloat()){
                     createNotification()
                 }
                 Log.i("PriceAlert", "User set price: " + userPrice

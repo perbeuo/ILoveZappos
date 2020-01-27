@@ -4,5 +4,11 @@
     <string name="channel_description">Your price set is dropped below current market price!</string>
     <string name="preference_file_key">com.fangpu.ilovezappos.alert_price</string>
     <string name="saved_alert_price_key">alert_price</string>
+    <string name="price_alert_worker_name">alert_price</string>
     <string name="price_alert_tag">com.fangpu.ilovezappos.PriceAlertWorker</string>
+    <string name="set_price_alert">Set Price Alert</string>
+    <string name="set">SET</string>
+    <string name="cancel">CANCEL</string>
+    <string name="price_alert_dialog_message">You will receive notification every hour if the current price drops below this price.</string>
+    <string name="price_alert_dialog_title">Price Alert</string>
 </resources>
