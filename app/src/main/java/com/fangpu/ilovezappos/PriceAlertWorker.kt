@@ -64,9 +64,9 @@ class PriceAlertWorker(appContext: Context, workerParams: WorkerParameters)
         val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
 
         val builder = applicationContext.let { it1 ->
-            NotificationCompat.Builder(it1, CHANNEL_ID)
-                .setContentTitle("Price Alert")
-                .setContentText("Your price is dropped below current market price!")
+            NotificationCompat.Builder(it1, applicationContext.getString(R.string.channel_id))
+                .setContentTitle(applicationContext.getString(R.string.notification_title))
+                .setContentText(applicationContext.getString(R.string.notification_content))
                 .setSmallIcon(R.drawable.notification_icon)
                 .setOnlyAlertOnce(true)
                 .setDefaults(Notification.DEFAULT_VIBRATE)

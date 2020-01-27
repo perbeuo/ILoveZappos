@@ -13,7 +13,6 @@ import androidx.work.*
 import com.fangpu.ilovezappos.ui.main.OrderBookFragment
 import com.fangpu.ilovezappos.ui.main.PriceHistoryFragment
 import java.util.concurrent.TimeUnit
-const val CHANNEL_ID = "com.fangpu.ilovezappos.notify"
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,11 +23,7 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.main_activity)
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                    .replace(R.id.container, PriceHistoryFragment.newInstance())
-//                    .commitNow()
-//        }
+
         createWorkManager()
         createNotificationChannel()
 
@@ -81,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             val name = getString(R.string.channel_name)
             val descriptionText = getString(R.string.channel_description)
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            val channel = NotificationChannel(getString(R.string.channel_id), name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system

@@ -45,46 +45,50 @@ class OrderBookFragment : Fragment() {
         }
 
         binding.setAlertPriceButton.setOnClickListener {
-
-            val input = EditText(context)
-            input.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_CLASS_NUMBER
-
-            activity?.let {
-                val builder = AlertDialog.Builder(it, R.style.Theme_MaterialComponents_Light_Dialog)
-                builder.apply {
-                    setPositiveButton(R.string.set
-                    ) { _, _ ->
-                        val userPrice = input.text.toString()
-                        var isValidInput = true
-                        Log.i("PriceAlert", "Get user input of $userPrice")
-
-                        // Check if the input is a valid number
-                        try {
-                            parseDouble(userPrice)
-                        } catch (e: NumberFormatException) {
-                            isValidInput = false
-                        }
-                        if (isValidInput){
-                            saveUserPriceData(userPrice)
-                            createWorkManager(userPrice)
-                        }
-                    }
-                    setNegativeButton(R.string.cancel
-                    ) { dialog, _ ->
-                        dialog.cancel()
-                    }
-                    setMessage(R.string.price_alert_dialog_message)
-                    setTitle(R.string.price_alert_dialog_title)
-                    setView(input)
-                }
-
-                // Create the AlertDialog
-                builder.create()
-                builder.show()
-            }
-
+            setUserPriceAlert()
         }
         return binding.root
+    }
+
+    private fun setUserPriceAlert() {
+        val input = EditText(context)
+        input.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_CLASS_NUMBER
+
+        activity?.let {
+            val builder = AlertDialog.Builder(it, R.style.Theme_MaterialComponents_Light_Dialog)
+            builder.apply {
+                setPositiveButton(
+                    R.string.set
+                ) { _, _ ->
+                    val userPrice = input.text.toString()
+                    var isValidInput = true
+                    Log.i("PriceAlert", "Get user input of $userPrice")
+
+                    // Check if the input is a valid number
+                    try {
+                        parseDouble(userPrice)
+                    } catch (e: NumberFormatException) {
+                        isValidInput = false
+                    }
+                    if (isValidInput) {
+                        saveUserPriceData(userPrice)
+                        createWorkManager(userPrice)
+                    }
+                }
+                setNegativeButton(
+                    R.string.cancel
+                ) { dialog, _ ->
+                    dialog.cancel()
+                }
+                setMessage(R.string.price_alert_dialog_message)
+                setTitle(R.string.price_alert_dialog_title)
+                setView(input)
+            }
+
+            // Create the AlertDialog
+            builder.create()
+            builder.show()
+        }
     }
 
     private fun createWorkManager(price: String) {
