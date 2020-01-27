@@ -8,8 +8,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
+import android.view.WindowManager
+import androidx.fragment.app.FragmentManager
 import androidx.work.*
 import com.fangpu.ilovezappos.ui.main.CHANNEL_ID
+import com.fangpu.ilovezappos.ui.main.OrderBookFragment
 import com.fangpu.ilovezappos.ui.main.PriceHistoryFragment
 import java.util.concurrent.TimeUnit
 
@@ -17,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.main_activity)
 //        if (savedInstanceState == null) {
 //            supportFragmentManager.beginTransaction()
@@ -25,6 +33,17 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        createWorkManager()
         createNotificationChannel()
+
+        val priceHistoryFragment = PriceHistoryFragment()
+        val orderBookFragment = OrderBookFragment()
+
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+
+        transaction.add(R.id.price_history_container, priceHistoryFragment, "price_history")
+        transaction.add(R.id.order_book_container, orderBookFragment, "order_book")
+
+        transaction.commit()
     }
 
     // Create the work of checking real-time price and compare with user set price

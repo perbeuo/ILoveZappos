@@ -20,24 +20,11 @@
             android:id="@+id/chart1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/message"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/message"
+            app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:priceChartData="@{viewModel.info}"/>
-
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chart1"
-            app:welcomeInfo="@{viewModel.info}"
-            tools:text="MainFragment" />
+            app:priceChartData="@{viewModel.info}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
